@@ -32,4 +32,7 @@ Route::middleware('auth')->group(function () {
     
 });
 
+Route::get('/AddProductForm', [ProductController::class, 'create'])->name('AddProductForm');
+Route::post('/AddProduct', [ProductController::class, 'store'])->name('AddProduct');
+
 require __DIR__.'/auth.php';

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Category;
 
 class ProductController extends Controller
 {
@@ -21,7 +22,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('AddProduct');
+        $categories = Category::all();
+        return view('AddProduct', compact('categories'));
 
     }
 
@@ -30,18 +32,14 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        validate ($request, [
-            'ProductName' => 'required|min:5|max:80',
-            'Price' => 'required|numeric',
-        ]);
 
+        $fileName = $request->ProductIMG->getClientOriginalName();
         Product::create([
             'ProductName' => $request->ProductName,
-            'CategoryId' => $request->CategoryId,
+            'CategoryID' => $request->CategoryID,
             'Price' => $request->Price,
             'Quantity' => $request->Quantity,
-            // default value for ProductIMG is default-product.png
-            'ProductIMG' => $request->ProductIMG ?? 'default-product.png',
+            'ProductIMG' => $request->ProductIMG->storeAs($fileName) ?? 'default-product.png',
         ]);
         return redirect()->route('dashboard');
     }

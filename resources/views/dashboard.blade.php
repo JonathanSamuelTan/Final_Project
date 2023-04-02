@@ -1,6 +1,6 @@
 @extends('template')
 
-@section('title', 'Welcome')
+@section('title', 'Inventory')
 
 @section('content')
 
@@ -8,7 +8,7 @@
     @foreach($products as $product)
         <div class="col-sm-3 my-3 mx-3">
          <div class="card" style="width: 18rem;">
-            <img src="{{ asset('storage/'.$product->ProductIMG) }}" class="card-img-top" alt="...">
+            <img src="{{ asset('storage/'.$product->ProductIMG) }}" class="card-img-top" alt="..." height="200px" width="100%">
             <div class="card-body">
               <h5 class="card-title">{{$product->ProductName}}</h5>
               <p class="card-text">Price: Rp.{{$product->Price}}</p>
