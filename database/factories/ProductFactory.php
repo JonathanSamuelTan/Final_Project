@@ -17,8 +17,8 @@ class ProductFactory extends Factory
     public function definition(): array
     {
         return [
-            // create random product name
-            'ProductName' => $this->faker->unique()->randomElement(['apple', 'banana', 'orange', 'mango', 'grape', 'chicken', 'beef', 'pork', 'fish', 'egg', 'salt', 'pepper', 'sugar', 'milk', 'butter', 'cheese']),
+            
+            'ProductName' => $this->faker->unique()->randomElement(['apple malang', 'sunpride banana', 'yuzu orange', 'Harum Manis mango', 'Black grape', 'chicken breast', 'yakiniku beef', 'pork belly', 'gurami fish', 'omega egg', 'sea salt', ' black pepper', 'brown sugar', 'low fat milk', 'swiss made butter', ' italian cheese']),
             'CategoryID' => $this->faker->numberBetween(1, 3),
             'Price' => $this->faker->numberBetween(1000, 10000),
             'Quantity' => $this->faker->numberBetween(1, 100),

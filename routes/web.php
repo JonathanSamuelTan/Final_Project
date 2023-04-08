@@ -32,7 +32,11 @@ Route::middleware('auth')->group(function () {
     
 });
 
+Route::get('/AdminPanel',[ProductController::class, 'admin'])->name('AdminPanel');
 Route::get('/AddProductForm', [ProductController::class, 'create'])->name('AddProductForm');
 Route::post('/AddProduct', [ProductController::class, 'store'])->name('AddProduct');
+Route::get('/UpdateProductForm/{id}', [ProductController::class, 'edit'])->name('UpdateProductForm');
+Route::patch('/UpdateProduct/{id}', [ProductController::class, 'update'])->name('UpdateProduct');
+Route::delete('/DeleteProduct/{id}', [ProductController::class, 'destroy'])->name('DeleteProduct');
 
 require __DIR__.'/auth.php';

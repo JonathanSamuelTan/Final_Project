@@ -1,6 +1,6 @@
 @extends('template')
 
-@section('title', 'Inventory')
+@section('title', 'Admin Panel')
 
 @section('content')
 
@@ -13,8 +13,13 @@
               <h5 class="card-title">{{$product->ProductName}}</h5>
               <p class="card-text">Price: Rp.{{$product->Price}}</p>
               <p class="card-text">Stock: {{$product->Quantity}}</p>
-              <a href="#" class="btn btn-primary">Input to Invoice</a>
-              
+              {{-- delete button --}}
+              <form action="{{route('DeleteProduct',$product->id)}}" method="POST">
+                @csrf
+                @method('DELETE')
+                <a href="{{route('UpdateProductForm',$product->id)}}" class="btn btn-success">Update</a>
+                <button type="submit" class="btn btn-danger">Delete</button>
+              </form>
             </div>
           </div>
         </div>

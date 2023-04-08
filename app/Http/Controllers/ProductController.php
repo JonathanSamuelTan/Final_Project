@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use Illuminate\Support\Facades\Storage;
 
 class ProductController extends Controller
 {
@@ -39,7 +40,7 @@ class ProductController extends Controller
             'CategoryID' => $request->CategoryID,
             'Price' => $request->Price,
             'Quantity' => $request->Quantity,
-            'ProductIMG' => $request->ProductIMG->storeAs($fileName) ?? 'default-product.png',
+            'ProductIMG' => $request->ProductIMG->storeAs('public/product',$fileName) ?? 'default-product.png',
         ]);
         return redirect()->route('dashboard');
     }
@@ -55,24 +56,65 @@ class ProductController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($id)
     {
-        //
+        // dd($id);
+        $product = Product::findOrFail($id);
+        $categories = Category::all();
+        // dd($product);
+        return view('UpdateProduct', compact('product', 'categories'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        $product = Product::findOrFail($id)->first();
+        // check if the user has uploaded a new image
+        if ($request->hasFile('ProductIMG')) {
+            // delete the old image from storage
+            Storage::delete($product->ProductIMG);
+            // get original extension from new image
+            $extension = $request->ProductIMG->getClientOriginalExtension();
+            //file name = product name + current time + extension
+            $fileName = $request->ProductName . '_' . time() . '.' . $extension;
+            // save the new image to storage/public/product
+            $request->ProductIMG->storeAs('public/product', $fileName);
+            // update the product
+            $product->update([
+                'ProductName' => $request->ProductName,
+                'CategoryID' => $request->CategoryID,
+                'Price' => $request->Price,
+                'Quantity' => $request->Quantity,
+                // save the new image to storage/public/product
+                'ProductIMG' => $fileName
+            ]);
+        } else {
+            $product->update([
+                'ProductName' => $request->ProductName,
+                'CategoryID' => $request->CategoryID,
+                'Price' => $request->Price,
+                'Quantity' => $request->Quantity,
+            ]);
+        }
+        return redirect()->route('AdminPanel');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($id)
     {
-        //
+        $product = Product::findOrFail($id);
+        Storage::delete($product->ProductIMG);
+        $product->delete();
+        return redirect()->route('AdminPanel');
+    }
+
+    public function admin()
+    {
+        $products = Product::all();
+        return view('AdminPanel', compact('products'));
     }
 }
