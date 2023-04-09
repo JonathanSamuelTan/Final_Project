@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Models\Product;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\TransactionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -32,6 +33,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/cart', [CartController::class, 'create'])->name('cart');
     Route::patch('/cart/{id}/increase', [CartController::class, 'increaseQuantity'])->name('cart.increase');
     Route::patch('/cart/{id}/decrease', [CartController::class, 'decreaseQuantity'])->name('cart.decrease');
+    Route::get('/transaction', [TransactionController::class, 'create'])->name('TransactionPage');
+    Route::post('/transaction', [TransactionController::class, 'store'])->name('TransactionDone');
 
     Route::get('/AdminPanel',[ProductController::class, 'admin'])->name('AdminPanel');
     Route::get('/AddProductForm', [ProductController::class, 'create'])->name('AddProductForm');

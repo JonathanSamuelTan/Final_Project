@@ -4,6 +4,12 @@
 
 @section('content')
 
+@if(session('error'))
+<div class="alert alert-warning">
+    {{ session('error') }}
+</div>
+@endif
+
 <div class="row mx-3 justify-content-center">
     @foreach($products as $product)
         <div class="col-sm-3 my-3 mx-3">

@@ -13,6 +13,7 @@
         <li><a href="\">Inventory</a></li>
     </ul>
   </nav>
+  
 
   <div class="title">
     <h1>Keranjang anda.</h1>
@@ -41,7 +42,7 @@
           </div>
           @endforeach
           <div class="buy">
-            {{-- <a class="buy-btn" href="{{route('getTransactionPage')}}">Beli Sekarang</a> --}}
+            <a class="buy-btn" href="{{route('TransactionPage')}}">Check Out</a>
           </div>
     </div>
 </body>
