@@ -35,7 +35,9 @@ Route::middleware('auth')->group(function () {
     Route::patch('/cart/{id}/decrease', [CartController::class, 'decreaseQuantity'])->name('cart.decrease');
     Route::get('/transaction', [TransactionController::class, 'create'])->name('TransactionPage');
     Route::post('/transaction', [TransactionController::class, 'store'])->name('TransactionDone');
+});
 
+Route::middleware('isAdmin')->group(function (){
     Route::get('/AdminPanel',[ProductController::class, 'admin'])->name('AdminPanel');
     Route::get('/AddProductForm', [ProductController::class, 'create'])->name('AddProductForm');
     Route::post('/AddProduct', [ProductController::class, 'store'])->name('AddProduct');

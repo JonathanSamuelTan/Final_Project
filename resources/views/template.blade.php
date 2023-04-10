@@ -52,12 +52,21 @@
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
+          {{-- cart and invoice page if role = user --}}
+          @if (Auth::user()->role == '0')
           <li class="nav-item">
-            <a class="nav-link" href="{{route('cart')}}" style="color: white;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS' sans-serif; font-size: 1rem;">CART</a>
+            <a class="nav-link" href="{{route('cart')}}" style="color: white;">Cart</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{route('TransactionPage')}}" style="color: white;font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS' sans-serif; font-size: 1rem;">INVOICE PAGE</a>
+            <a class="nav-link" href="{{route('TransactionPage')}}" style="color: white;">Invoice Page</a>
           </li>
+          @endif
+          {{-- Admin Panel if role = admin --}}
+          @if (Auth::user()->role == '1')
+          <li class="nav-item">
+            <a class="nav-link" href="{{route('AdminPanel')}}" style="color: white;">Admin Panel</a>
+          </li>
+          @endif
           <li class="nav-item">
             <form action="{{route('logout')}}" method="POST">
               @csrf
