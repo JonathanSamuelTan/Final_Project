@@ -74,7 +74,7 @@ class ProductController extends Controller
         // check if the user has uploaded a new image
         if ($request->hasFile('ProductIMG')) {
             // delete the old image from storage
-            Storage::delete($product->ProductIMG);
+            Storage::delete('public/product/'.$product->ProductIMG);
             // get original extension from new image
             $extension = $request->ProductIMG->getClientOriginalExtension();
             //file name = product name + current time + extension
@@ -107,7 +107,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
-        Storage::delete('public/product'.$product->ProductIMG);
+        Storage::delete('public/product/'.$product->ProductIMG);
         $product->delete();
         return redirect()->route('AdminPanel');
     }
