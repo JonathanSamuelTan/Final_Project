@@ -33,16 +33,18 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-
-        $fileName = $request->ProductIMG->getClientOriginalName();
+        $extension = $request->ProductIMG->getClientOriginalExtension();
+        $fileName = $request->ProductName . '_' . time() . '.' . $extension;
+        $request->ProductIMG->storeAs('public/product', $fileName);
+        
         Product::create([
             'ProductName' => $request->ProductName,
             'CategoryID' => $request->CategoryID,
             'Price' => $request->Price,
             'Quantity' => $request->Quantity,
-            'ProductIMG' => $request->ProductIMG->storeAs('public/product',$fileName) ?? 'default-product.png',
+            'ProductIMG' => $fileName ?? 'default-product.png',
         ]);
-        return redirect()->route('dashboard');
+        return redirect()->route('AdminPanel');
     }
 
     /**
@@ -58,10 +60,8 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        // dd($id);
         $product = Product::findOrFail($id);
         $categories = Category::all();
-        // dd($product);
         return view('UpdateProduct', compact('product', 'categories'));
     }
 
@@ -70,7 +70,7 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $product = Product::findOrFail($id)->first();
+        $product = Product::findOrFail($id);
         // check if the user has uploaded a new image
         if ($request->hasFile('ProductIMG')) {
             // delete the old image from storage
@@ -107,7 +107,7 @@ class ProductController extends Controller
     public function destroy($id)
     {
         $product = Product::findOrFail($id);
-        Storage::delete($product->ProductIMG);
+        Storage::delete('public/product'.$product->ProductIMG);
         $product->delete();
         return redirect()->route('AdminPanel');
     }

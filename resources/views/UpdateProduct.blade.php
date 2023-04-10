@@ -23,7 +23,7 @@
       @method('PATCH')
       <div class="form-group">
         <label for="product-name">Product Name</label>
-        <input type="text" id="product-name" name="ProductName" minlength="8" maxlength="80"  value="{{ old('ProductStock', $product->ProductName) }}" required >
+        <input type="text" id="product-name" name="ProductName" minlength="8" maxlength="80"  value="{{ old('ProductName', $product->ProductName) }}" required >
       </div>
       <div class="form-group">
         <label for="category">Category</label>
@@ -36,11 +36,11 @@
     
       <div class="form-group">
         <label for="price">Price</label>
-        <input type="number" id="price" name="Price" required min="1" value="{{ old('ProductStock', $product->Price) }}">
+        <input type="number" id="price" name="Price" required min="1" value="{{ old('Price', $product->Price) }}">
       </div>
       <div class="form-group">
         <label for="quantity">Quantity</label>
-        <input type="number" id="quantity" name="Quantity" required min="1" value="{{ old('ProductStock', $product->Quantity) }}">
+        <input type="number" id="quantity" name="Quantity" required min="1" value="{{ old('Quantity', $product->Quantity) }}">
       </div>
       <div class="form-group">
         <label for="product-image">Product Image</label>
