@@ -42,7 +42,7 @@
           </div>
           @endforeach
           <div class="buy">
-            <a class="buy-btn" href="{{route('TransactionPage')}}">Check Out</a>
+            <a class="buy-btn" href="{{route('TransactionPage')}}">Invoice Page</a>
           </div>
     </div>
 </body>
